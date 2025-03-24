@@ -12,7 +12,7 @@ const PlayRadioHandler = {
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
-            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM', 0)
+            .addAudioPlayerPlayDirective(https://stream.zeno.fm/07zek6w01a0uv)
             .withShouldEndSession(true)
             .getResponse();
     }
@@ -106,10 +106,10 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
     .addRequestHandlers(
-        PlayRadioHandler,
-        PauseRadioHandler,
-        ResumeRadioHandler,
-        StopRadioHandler,
+        reproduce milk fm, milk fm, reproduce milk radio,
+        Pausa,
+        Resume milk fm,
+        detener, parar,
         HelpHandler,
         CancelAndStopHandler
     )
