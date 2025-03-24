@@ -1,10 +1,10 @@
 const Alexa = require('ask-sdk-core');
 
-// URL de la emisora Milk FM
+// URL de la emisora Milk FM Radio
 const RADIO_STREAM_URL = 'https://stream.zeno.fm/07zek6w01a0uv';
 
-// Invocation Name: "Milk FM"
-// Los usuarios dirán "Alexa, abre Milk FM" para iniciar la skill.
+// Invocation Name: "Milk FM Radio"
+// Los usuarios dirán "Alexa, abre Milk FM Radio" para iniciar la skill.
 
 // Manejador para iniciar la reproducción de la radio
 const PlayRadioHandler = {
@@ -14,10 +14,10 @@ const PlayRadioHandler = {
                 handlerInput.requestEnvelope.request.intent.name === 'PlayRadioIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Bienvenido a Milk FM. Reproduciendo tu emisora favorita.';
+        const speechText = 'Bienvenido a Milk FM Radio. Reproduciendo tu emisora favorita.';
         return handlerInput.responseBuilder
             .speak(speechText) // Mensaje de bienvenida
-            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM', 0)
+            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM Radio', 0)
             .withShouldEndSession(true) // Cierra la sesión después de iniciar la reproducción
             .getResponse();
     }
@@ -44,7 +44,7 @@ const ResumeRadioHandler = {
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
-            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM', 0) // Reanuda la reproducción
+            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM Radio', 0) // Reanuda la reproducción
             .getResponse();
     }
 };
@@ -56,7 +56,7 @@ const StopRadioHandler = {
                handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent';
     },
     handle(handlerInput) {
-        const speechText = 'Gracias por escuchar Milk FM. ¡Hasta pronto!';
+        const speechText = 'Gracias por escuchar Milk FM Radio. ¡Hasta pronto!';
         return handlerInput.responseBuilder
             .speak(speechText) // Mensaje de despedida
             .addAudioPlayerStopDirective() // Detiene la reproducción
@@ -72,7 +72,7 @@ const HelpHandler = {
                handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speechText = 'Puedes decir: "Reproduce Milk FM" para escuchar la radio, o "Detén" para parar la reproducción. ¿En qué más puedo ayudarte?';
+        const speechText = 'Puedes decir: "Reproduce Milk FM Radio" para escuchar la emisora, o "Detén" para parar la reproducción. ¿En qué más puedo ayudarte?';
         return handlerInput.responseBuilder
             .speak(speechText) // Mensaje de ayuda
             .reprompt(speechText) // Repite el mensaje si el usuario no responde
@@ -88,7 +88,7 @@ const CancelAndStopHandler = {
                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Gracias por escuchar Milk FM. ¡Hasta pronto!';
+        const speechText = 'Gracias por escuchar Milk FM Radio. ¡Hasta pronto!';
         return handlerInput.responseBuilder
             .speak(speechText) // Mensaje de despedida
             .withShouldEndSession(true) // Cierra la sesión
@@ -104,7 +104,7 @@ const ErrorHandler = {
     handle(handlerInput, error) {
         console.log(`Error handled: ${error.message}`);
         return handlerInput.responseBuilder
-            .speak('Lo siento, no pude reproducir Milk FM en este momento. Por favor, inténtalo de nuevo más tarde.') // Mensaje de error
+            .speak('Lo siento, no pude reproducir Milk FM Radio en este momento. Por favor, inténtalo de nuevo más tarde.') // Mensaje de error
             .getResponse();
     }
 };
