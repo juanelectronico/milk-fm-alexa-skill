@@ -3,8 +3,8 @@ const Alexa = require('ask-sdk-core');
 // URL de la emisora Milk FM Radio
 const RADIO_STREAM_URL = 'https://stream.zeno.fm/07zek6w01a0uv';
 
-// Invocation Name: "Milk FM Radio"
-// Los usuarios dirán "Alexa, abre Milk FM Radio" para iniciar la skill.
+// Invocation Name: "milk fm"
+// Los usuarios dirán "Alexa, abre milk fm" para iniciar la skill.
 
 // Manejador para iniciar la reproducción de la radio
 const PlayRadioHandler = {
@@ -14,7 +14,7 @@ const PlayRadioHandler = {
                 handlerInput.requestEnvelope.request.intent.name === 'PlayRadioIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Bienvenido a Milk FM Radio. Reproduciendo tu emisora favorita.';
+        const speechText = 'Bienvenido a milk fm Radio. Reproduciendo tu emisora favorita.';
         return handlerInput.responseBuilder
             .speak(speechText) // Mensaje de bienvenida
             .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM Radio', 0)
