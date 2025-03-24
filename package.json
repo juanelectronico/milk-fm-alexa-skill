@@ -3,6 +3,9 @@ const Alexa = require('ask-sdk-core');
 // URL de la emisora Milk FM
 const RADIO_STREAM_URL = 'https://stream.zeno.fm/07zek6w01a0uv';
 
+// Invocation Name: "Milk FM"
+// Los usuarios dirán "Alexa, abre Milk FM" para iniciar la skill.
+
 // Manejador para iniciar la reproducción de la radio
 const PlayRadioHandler = {
     canHandle(handlerInput) {
@@ -11,9 +14,11 @@ const PlayRadioHandler = {
                 handlerInput.requestEnvelope.request.intent.name === 'PlayRadioIntent');
     },
     handle(handlerInput) {
+        const speechText = 'Bienvenido a Milk FM. Reproduciendo tu emisora favorita.';
         return handlerInput.responseBuilder
-            .addAudioPlayerPlayDirective(https://stream.zeno.fm/07zek6w01a0uv)
-            .withShouldEndSession(true)
+            .speak(speechText) // Mensaje de bienvenida
+            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM', 0)
+            .withShouldEndSession(true) // Cierra la sesión después de iniciar la reproducción
             .getResponse();
     }
 };
@@ -26,7 +31,7 @@ const PauseRadioHandler = {
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
-            .addAudioPlayerStopDirective()
+            .addAudioPlayerStopDirective() // Detiene la reproducción
             .getResponse();
     }
 };
@@ -39,7 +44,7 @@ const ResumeRadioHandler = {
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
-            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM', 0)
+            .addAudioPlayerPlayDirective('REPLACE_ALL', RADIO_STREAM_URL, 'Milk FM', 0) // Reanuda la reproducción
             .getResponse();
     }
 };
@@ -51,8 +56,11 @@ const StopRadioHandler = {
                handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent';
     },
     handle(handlerInput) {
+        const speechText = 'Gracias por escuchar Milk FM. ¡Hasta pronto!';
         return handlerInput.responseBuilder
-            .addAudioPlayerStopDirective()
+            .speak(speechText) // Mensaje de despedida
+            .addAudioPlayerStopDirective() // Detiene la reproducción
+            .withShouldEndSession(true) // Cierra la sesión
             .getResponse();
     }
 };
@@ -64,10 +72,10 @@ const HelpHandler = {
                handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const speechText = 'Puedes decir: "Reproduce Milk FM" para escuchar la radio. ¿En qué más puedo ayudarte?';
+        const speechText = 'Puedes decir: "Reproduce Milk FM" para escuchar la radio, o "Detén" para parar la reproducción. ¿En qué más puedo ayudarte?';
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+            .speak(speechText) // Mensaje de ayuda
+            .reprompt(speechText) // Repite el mensaje si el usuario no responde
             .getResponse();
     }
 };
@@ -80,10 +88,10 @@ const CancelAndStopHandler = {
                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Adiós. ¡Gracias por escuchar Milk FM!';
+        const speechText = 'Gracias por escuchar Milk FM. ¡Hasta pronto!';
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .withShouldEndSession(true)
+            .speak(speechText) // Mensaje de despedida
+            .withShouldEndSession(true) // Cierra la sesión
             .getResponse();
     }
 };
@@ -96,7 +104,7 @@ const ErrorHandler = {
     handle(handlerInput, error) {
         console.log(`Error handled: ${error.message}`);
         return handlerInput.responseBuilder
-            .speak('Lo siento, no pude reproducir Milk FM en este momento. Por favor, inténtalo de nuevo más tarde.')
+            .speak('Lo siento, no pude reproducir Milk FM en este momento. Por favor, inténtalo de nuevo más tarde.') // Mensaje de error
             .getResponse();
     }
 };
@@ -106,10 +114,10 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
     .addRequestHandlers(
-        reproduce milk fm, milk fm, reproduce milk radio,
-        Pausa,
-        Resume milk fm,
-        detener, parar,
+        PlayRadioHandler,
+        PauseRadioHandler,
+        ResumeRadioHandler,
+        StopRadioHandler,
         HelpHandler,
         CancelAndStopHandler
     )
